@@ -6,12 +6,15 @@ var colors = require('material-ui/lib/styles/colors');
 
 // mock with material-ui theme;
 // in the app component
+var primaryColor = '#244273';
+
 var App = React.createClass({
 
   render: function() {
     var muiTheme = getMuiTheme({
       palette:{
-        primary1Color : colors.indigo500 // low case
+        // primary1Color : colors.indigo500 // low case
+        primary1Color:primaryColor // custom
       }
     });
 

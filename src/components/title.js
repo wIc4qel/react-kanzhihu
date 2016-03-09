@@ -14,7 +14,8 @@ var Appbar = require('material-ui/lib/app-bar');
 // css styles.
 var _styles = {
   subtitle : {
-    fontSize:'10px'
+    fontSize:'10px',
+    marginLeft:'10px'
   }
 };
 // css file manner.

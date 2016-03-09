@@ -81,11 +81,14 @@ var List = React.createClass({
   },
   handlePaginator : function(evt){
     var self = this;
-    var direction = parseInt(evt.currentTarget.dataset.dir);
-    var day = evt.currentTarget.dataset.date;
+    // var direction = parseInt(evt.currentTarget.dataset.dir);
+    // var day = evt.currentTarget.dataset.date;
+
+    var direction = evt.direction;
+    var day = evt.date;
     var articles = this.state._cache.filter(function(post){
       return (new Date(post.date)).toLocaleDateString()
-      == (new Date(day)).toLocaleDateString();
+      == day.toLocaleDateString();
     });
     // cursor
     var tmp = articles.length;
@@ -97,7 +100,7 @@ var List = React.createClass({
         if(err) return console.log(err) //TODO
         articles = articles.concat(posts.filter(function(p){
           return (new Date(p.date)).toLocaleDateString()
-          == (new Date(day)).toLocaleDateString();
+          == day.toLocaleDateString();
         }));
         cursor = cursor+direction*(articles.length-tmp);
         self.setState({
@@ -105,25 +108,25 @@ var List = React.createClass({
           articles : articles,
           _oldest : posts[posts.length-1].publishtime,
           _cursor : cursor,
-          _day : (new Date(day))
+          _day : day
         });
       });
     }else{
       this.setState({
         articles : articles,
         _cursor : cursor,
-        _day : (new Date(day))
+        _day : day
       });
     }
   },
 
   render: function() {
     // mock appbar in my title component
-    // 
+    //
     return (<div>
-        <Title title={this.state._day} />
+        <Title title={this.state._day} handlepaginator={this.handlePaginator}/>
         <Articles items={this.state.articles} />
-        <Paginator now={this.state._day} handlepaginator={this.handlePaginator} />
+        {/*<Paginator now={this.state._day} handlepaginator={this.handlePaginator} />*/}
       </div>);
   }
 
