@@ -26,6 +26,7 @@ var List = React.createClass({
           return (new Date(post.date)).toLocaleDateString()
           == self.state._day.toLocaleDateString();
         });
+        console.log('>>> get posts success');
         self.setState({
           _cache : ret.posts,
           articles : articles,

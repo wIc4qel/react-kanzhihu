@@ -23,9 +23,10 @@ var _styles = {
 var Title = React.createClass({
   leftTouchHandler:function(){
     // 前一天 dir:1 right
+    console.log('>>> in right icon tap');
     if(typeof this.props.handlepaginator == 'function'){
       this.props.handlepaginator({
-        date : date('yesterday',this.props.day),
+        date : date('yesterday',this.props.title),
         direction : 1
       });
     }
@@ -33,12 +34,13 @@ var Title = React.createClass({
   rightTouchHandler:function(){
     if(typeof this.props.handlepaginator == 'function'){
       this.props.handlepaginator({
-        date : date('tomorrow',this.props.day),
-        direction : 1
+        date : date('tomorrow',this.props.title),
+        direction : -1
       });
     }
   },
   render: function() {
+    console.log('>>> in title render');
     var props = {};
     var day = this.props.title;
     var _today = day.toLocaleDateString() == (new Date).toLocaleDateString();
@@ -46,15 +48,24 @@ var Title = React.createClass({
     ?<span><span>看知乎</span><span style={_styles.subtitle}>每天三次，为你精选知乎最佳答案</span></span> // use className to use css style.
     :<span>{day.toLocaleDateString()}</span>;
     props.title = title;
-    props.iconElementRight = <IconButton><NavigationArrowForward /></IconButton>;
-    if(!_today){
-      props.iconElementLight = <IconButton><NavigationArrowBack /></IconButton>;
-    }
+
+    // icon button click event
+    // refer : https://github.com/callemall/material-ui/issues/2482
+
+    props.iconElementRight = <IconButton onClick={this.leftTouchHandler}><NavigationArrowForward /></IconButton>;
+    // props.iconElementRight = <IconButton iconClassName='muidocs-icon-custom-github' onTouchTap={this.leftTouchHandler} />
+
     // TODO: use event target (iconbutton) to get vars;
 
-    props.onLeftIconButtonTouchTap = this.leftTouchHandler.bind(this);
-    props.onLeftIconButtonTouchTap = this.rightTouchHandler.bind(this);
+    // props.onRightIconButtonTouchTap = this.leftTouchHandler;
+
+    // props.onLeftIconButtonTouchTap = this.rightTouchHandler;
+
     props.showMenuIconButton = false;
+    if(!_today){
+      props.iconElementLeft = <IconButton onClick={this.rightTouchHandler}><NavigationArrowBack /></IconButton>;
+        props.showMenuIconButton = true;
+    }
 
     //*** old maner **//
     // var day = this.props.title;
@@ -69,6 +80,7 @@ var Title = React.createClass({
     //********** react.dom.[] call use this maner **************/
     // return Appbar(...args);
     // return Appbar.apply(this,args);
+    console.log('here');
     return React.createElement(Appbar,...args);
   }
 

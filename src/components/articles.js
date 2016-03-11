@@ -4,6 +4,7 @@ var PropTypes = React.PropTypes;
 var ImageLoader = require('react-imageloader');
 var Link = require('react-router').Link;
 
+var _anti_hotlink_base = 'http://anti-anti-hotlink-9defc.coding.io/img?q=';
 // mock material ui card componet.
 
 var Card = require('material-ui/lib/card/card');
@@ -13,6 +14,22 @@ var CardMedia= require('material-ui/lib/card/card-media');
 var CardTitle= require('material-ui/lib/card/card-title');
 var FlatButton= require('material-ui/lib/flat-button');
 var CardText= require('material-ui/lib/card/card-text');
+
+var FlatButton=require('material-ui/lib/flat-button');
+
+// css styles
+var _styles={
+  _container:{
+    width:'90%',
+    margin:'5px auto'
+  },
+  _cardContainer:{
+    marginBottom:'10px'
+  },
+  _img:{
+    width:'100%'
+  }
+};
 
 var Articles = React.createClass({
   realname:function(name){
@@ -25,38 +42,38 @@ var Articles = React.createClass({
     return [item.date.replace(/-/g,''),
     this.realname(item.name).code].join('-');
   },
+  getUri:function(src){
+    return _anti_hotlink_base+src.substring(src.lastIndexOf('/')+1);
+  },
   render: function() {
     var self = this;
-    
+
     // TODO: use loading gif
     var preloader = function(){
       return <p>加载中</p>;
     };
 
-    return (<div>
+    return (<div style={_styles._container}>
         {this.props.items.map(function(item,key){
-          // return (<div key={key}>
-          //     <ImageLoader src={item.pic} preloader={preloader} key={key}>
-          //       加载失败
-          //     </ImageLoader>
-          //     <p>
-          //       <Link to={'/article/'+self.getId(item)}>
-          //       {self.realname(item.name).text}
-          //       </Link>
-          //     </p>
-          //     <p>{item.excerpt}</p>
-          //   </div>);
+
           _pubTime = (new Date(parseInt(item.publishtime)*1000)).toLocaleString();
-          return (<Card>
-            <CardMedia>
-              <ImageLoader src={item.pic} preloader={preloader} >加载失败</ImageLoader>
+          return (<div style={_styles._cardContainer}><Card>
+            <CardMedia overlay={<CardTitle title={self.realname(item.name).text} subtitle={'发布于：'+_pubTime}>
+            </CardTitle>}>
+              <ImageLoader imgProps={_styles._img} src={self.getUri(item.pic)} preloader={preloader} >加载失败</ImageLoader>
             </CardMedia>
-            <CardTitle title={self.realname(item.name).text} subtitle={'发布于：'+_pubTime}>
-            </CardTitle>
+            {/*<CardTitle title={self.realname(item.name).text} subtitle={'发布于：'+_pubTime}>
+            </CardTitle> */}
             <CardText>
               {item.excerpt}
             </CardText>
-          </Card>);
+            {/* use button's children prop to render Link */}
+            <CardActions>
+              {/*<FlatButton primary={true} children={<Link to={'/article/'+self.getId(item)}>阅读文章</Link>}></FlatButton>*/}
+              <FlatButton secondary={true} label='阅读文章'></FlatButton>
+              {/*关于children & label 继承theme的问题： children不继承，label继承*/}
+            </CardActions>
+          </Card></div>);
         })}
       </div>);
   }
