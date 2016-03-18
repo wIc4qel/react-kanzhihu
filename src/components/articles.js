@@ -67,11 +67,8 @@ var Articles = React.createClass({
             <CardText>
               {item.excerpt}
             </CardText>
-            {/* use button's children prop to render Link */}
             <CardActions>
-              {/*<FlatButton primary={true} children={<Link to={'/article/'+self.getId(item)}>阅读文章</Link>}></FlatButton>*/}
-              <FlatButton secondary={true} label='阅读文章'></FlatButton>
-              {/*关于children & label 继承theme的问题： children不继承，label继承*/}
+              <FlatButton containerElement={<Link to={'/article/'+self.getId(item)} />} secondary={true} label='阅读文章'></FlatButton>
             </CardActions>
           </Card></div>);
         })}

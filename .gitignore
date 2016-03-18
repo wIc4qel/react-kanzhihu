@@ -2,3 +2,5 @@ node_modules
 .DS_Store
 src/test.*
 dist/*.js
+src/components/paginator.js
+src/components/articletitle.js

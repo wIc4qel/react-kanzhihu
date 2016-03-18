@@ -18,7 +18,6 @@ var _styles = {
     marginLeft:'10px'
   }
 };
-// css file manner.
 
 var Title = React.createClass({
   leftTouchHandler:function(){
@@ -49,22 +48,15 @@ var Title = React.createClass({
     :<span>{day.toLocaleDateString()}</span>;
     props.title = title;
 
-    // icon button click event
-    // refer : https://github.com/callemall/material-ui/issues/2482
-
+    // icon button click event refer : https://github.com/callemall/material-ui/issues/2482
     props.iconElementRight = <IconButton onClick={this.leftTouchHandler}><NavigationArrowForward /></IconButton>;
-    // props.iconElementRight = <IconButton iconClassName='muidocs-icon-custom-github' onTouchTap={this.leftTouchHandler} />
-
     // TODO: use event target (iconbutton) to get vars;
 
-    // props.onRightIconButtonTouchTap = this.leftTouchHandler;
-
-    // props.onLeftIconButtonTouchTap = this.rightTouchHandler;
-
-    props.showMenuIconButton = false;
+    props.showMenuIconButton = true;
     if(!_today){
       props.iconElementLeft = <IconButton onClick={this.rightTouchHandler}><NavigationArrowBack /></IconButton>;
         props.showMenuIconButton = true;
+        props.titleStyle={textAlign:'center',fontSize:'20px'}
     }
 
     //*** old maner **//
@@ -75,12 +67,7 @@ var Title = React.createClass({
     //      : day.toLocaleDateString()}
     //   </h1>);
     var args = [props];
-    // console.log(typeof Appbar);
 
-    //********** react.dom.[] call use this maner **************/
-    // return Appbar(...args);
-    // return Appbar.apply(this,args);
-    console.log('here');
     return React.createElement(Appbar,...args);
   }
 
