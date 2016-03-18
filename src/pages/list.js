@@ -6,7 +6,8 @@ var request = require('superagent');
 
 var Title = require('../components/title');
 var Articles = require('../components/articles');
-var Paginator = require('../components/paginator');
+
+var Loader = require('../components/loader');
 
 var __base_api = 'http://api.kanzhihu.com/';
 
@@ -122,12 +123,12 @@ var List = React.createClass({
   },
 
   render: function() {
-    // mock appbar in my title component
     //
     return (<div>
         <Title title={this.state._day} handlepaginator={this.handlePaginator}/>
-        <Articles items={this.state.articles} />
-        {/*<Paginator now={this.state._day} handlepaginator={this.handlePaginator} />*/}
+        {this.state.articles.length>0
+        ?<Articles items={this.state.articles} />
+        :<Loader></Loader>}
       </div>);
   }
 

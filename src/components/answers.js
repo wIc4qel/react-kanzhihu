@@ -8,6 +8,8 @@ var Divider = require('material-ui/lib/divider');
 var Subheader = require('material-ui/lib/Subheader');
 var Avatar = require('material-ui/lib/avatar');
 var darkBlack = require('material-ui/lib/styles/colors').darkBlack;
+var blue500 = require('material-ui/lib/styles/colors').blue500;
+var FontIcon = require('material-ui/lib/font-icon');
 
 var _anti_hotlink_base = 'http://anti-anti-hotlink-9defc.coding.io/img?z=';
 
@@ -28,6 +30,10 @@ var Answers = React.createClass({
   getAvatarUri:function(url){
     return _anti_hotlink_base+url.substring(8);
   },
+  handleTap:function(item){
+    var _uri = this.getanswerlink(item);
+    window.open(_uri);
+  },
   render: function() {
     console.log('>>> answers rendering');
     var self = this;
@@ -37,12 +43,22 @@ var Answers = React.createClass({
     for(var i=0; i<this.props.items.length; i++){
       var item = this.props.items[i];
       items.push(<ListItem
+        onClick = {this.handleTap.bind(this,item)}
         leftAvatar={<Avatar src={this.getAvatarUri(item.avatar)} />}
         primaryText={this.props.items[i]['title']}
         secondaryText={
           <p>
             <span style={{color: darkBlack}}>{item.authorname}</span>
-            <span>{'('+item.vote+')'}</span><br />
+            <span>
+              {'('+item.vote}
+              <FontIcon
+                className="material-icons"
+                color = {blue500}
+                style ={{fontSize:'14px'}}>
+                thumb_up
+              </FontIcon>
+              {')'}
+            </span><br />
             {item.summary}
           </p>
         }

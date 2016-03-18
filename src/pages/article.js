@@ -5,6 +5,7 @@ var request = require('superagent');
 var Link = require('react-router').Link;
 var AppBar=require('material-ui/lib/app-bar');
 var Answers = require('../components/answers');
+var Loader = require('../components/loader');
 var IconButton=require('material-ui/lib/icon-button');
 var NavigationArrowForward = require('material-ui/lib/svg-icons/navigation/arrow-forward');
 var NavigationArrowBack = require('material-ui/lib/svg-icons/navigation/arrow-back');
@@ -48,10 +49,12 @@ var Article = React.createClass({
           titleStyle={{fontSize:'20px'}}
           showMenuIconButton={true}
         />
-        <Answers
-          items={this.state.answers}
-          subTitle={this.props.params.id.split('-')[1]}
-        />
+        {this.state.answers.length > 0
+          ?<Answers
+            items={this.state.answers}
+            subTitle={this.props.params.id.split('-')[1]}
+          />
+        :<Loader></Loader>}
       </div>);
   }
 
