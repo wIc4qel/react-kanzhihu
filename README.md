@@ -4,6 +4,7 @@ A simple app of [kanzhihu](http://www.kanzhihu.com/) with Material UI's componen
 you'll also get to know how to integrate the customer components with material-ui.
 It's not for the best practice but a good project to get start using React + Webpack + Material UI.
 
+![GIF](http://7xnqxb.com1.z0.glb.clouddn.com/g1.gif)
 ## Setup/Runing
 
 ```bash
